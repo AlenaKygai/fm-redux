@@ -1,25 +1,15 @@
-import {useReducer} from 'react';
+import {connect} from 'react-redux';
 
-function reducer(state,action){
-  switch(action.type){
-    case 'increment':{
-      return {count:state.count+1}
-    }
-    case 'decrement':{
-      return {count:state.count-1}
-    }   
-    default: return state;
+function App(props) {
+  const {count, dispatch} = props;
+  const increment = () => {
+    const action={type:'INCREMENT'};
+    dispatch(action)
   }
-}
-
-function App() {
-  const [{count}, dispatch] = useReducer(reducer,{count:0});
-  const increment = () =>{
-    dispatch({type:'increment'})
-  }
-  const decrement = () =>{
-    dispatch({type:'decrement'})
-  }
+  const decrement = () => {
+    const action={type:'DECREMENT'};
+    dispatch(action)
+  }  
   return (
     <div>
       <h2>Count:{count}</h2>
@@ -29,4 +19,10 @@ function App() {
   );
 }
 
-export default App;
+function mapStateToProps(state){
+  return {count:state.count};
+}
+// const withProps = connect(mapStateToProps);
+// const componentWithProps = withProps(App);
+
+export default connect(mapStateToProps)(App);
