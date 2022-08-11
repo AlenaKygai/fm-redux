@@ -1,31 +1,26 @@
 import {connect} from 'react-redux';
-import * as ActionCreators from './action';
+import * as ActionCreators from './actions';
 
 function App(props) {
-  const {count, step, dispatch} = props;
-  const increment = () => {
-    dispatch(ActionCreators.increment());
-  }
-  const decrement = () => {
-    dispatch(ActionCreators.decrement());
-  }  
-  const onChange = ({target:{value}}) => {
-    dispatch(ActionCreators.setStep(Number(value)));
-  }
+  const {count, step, incrementAction,decrementAction,setStepAction } = props;
+  
+  const onChange = ({target:{value}}) => setStepAction(Number(value));
   return (
     <div>
       <h2>Count:{count}</h2>
-      <button onClick={increment}>+</button>
-      <button onClick={decrement}>-</button>
+      <button onClick={incrementAction}>+</button>
+      <button onClick={decrementAction}>-</button>
       <input type='number' value={step} onChange={onChange} />
     </div>
   );
 }
 
-function mapStateToProps(state){
-  return {state};
-}
-// const withProps = connect(mapStateToProps);
-// const componentWithProps = withProps(App);
+const mapStateToProps = ({count,step}) => ({count,step});
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch) => ({
+  incrementAction: () => dispatch(ActionCreators.increment()),
+  decrementAction: () => dispatch(ActionCreators.increment()),
+  setStepAction: (newStep) => dispatch(ActionCreators.setStep(newStep)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
