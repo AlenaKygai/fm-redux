@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import * as ActionCreators from './actions';
+import * as ActionCreators from './actions/counterCreator';
 
 function App(props) {
   const {count, step, incrementAction,decrementAction,setStepAction } = props;
